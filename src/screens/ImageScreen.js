@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import ImageDetail from "../components/ImageDetail"
 import { ScrollView } from "react-native-gesture-handler";
 
-const ImageScreen = (props) => {
+const ImageScreen = () => {
     return (
         <View>
             <ScrollView>

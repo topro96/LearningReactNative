@@ -3,7 +3,7 @@ import { View, Image, StyleSheet, Text } from "react-native";
 
 
 
-const ImageDetail = (source , style,  title) => {
+const ImageDetail = ({source , style,  title}) => {
     return (
         <View>
             <Image source = {source} style = {style}/>
