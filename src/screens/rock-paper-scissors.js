@@ -18,46 +18,47 @@ const state = {
 
 const RockPaperScissors = () => {
 
-    const [playerState, setPlayerState] = useState(state.Unk);
+    const [[playerChoice, computerChoice, playerState], set] = useState([stuff.Unk, stuff.Unk, state.Unk]);
 
     const playButtonPressed = () => {
+        console.log("player pressed!");
         var stuffSize = Object.keys(stuff).length;
         //get result player
-        var playResult = Math.floor(Math.random() * stuffSize);
-        console.log(playResult);
-
+        let player = Math.floor(Math.random() * (stuffSize - 1));
         //get result computer
-        var computerResult = Math.floor(Math.random() * stuffSize);
-        console.log(computerResult);
+        let computer = Math.floor(Math.random() * (stuffSize - 1));
+        let _state = state.Unk;
+
+        console.log("Before: (Player: " + player + ", Computer: " + computer + ", State: " + _state + ")");
 
         //compare and output
-        if (playResult - computerResult == 0) {
-            console.log("Tie");
-        } else if (playResult == stuff.Rock) {
-            if (computerResult == stuff.Paper) {
-                setPlayerState(state.Lose);
+        if (player - computer == 0) {
+            _state = state.Tie;
+        } else if (player == stuff.Rock) {
+            if (computer == stuff.Paper) {
+                _state = state.Lose;
             } else {
-                setPlayerState(state.Win);
+                _state = state.Win;
             }
-        } else if (playResult == stuff.Paper) {
-            if (computerResult == stuff.Rock) {
-                setPlayerState(state.Win);
+        } else if (player == stuff.Paper) {
+            if (computer == stuff.Rock) {
+                _state = state.Win;
             } else {
-                setPlayerState(state.Lose);
+                _state = state.Lose;
             }
         }
         else { //Scissors
-            if (computerResult == stuff.Rock) {
-                setPlayerState(state.Lose);
+            if (computer == stuff.Rock) {
+                _state = state.Lose;
             } else {
-                setPlayerState(state.Win);
+                _state = state.Win;
             }
         }
-
+        console.log("After: (Player: " + player + ", Computer: " + computer + ", State: " + _state + ")");
+        set([player, computer, _state]);
     }
 
-     displayResult = () => {
-
+    var displayResult = () => {
         const winMessage = <Text>You win!</Text>;
         const loseMessage = <Text>You lose, let try again!</Text>;
         const tieMessage = <Text>Tie!</Text>;
@@ -79,31 +80,67 @@ const RockPaperScissors = () => {
         );
     }
 
+
+    displayDecision = (style, title, choice) => {
+        const rockImagePath = require("../../assets/rock-paper-scissors/RockLeft.png");
+        const paperImagePath = require("../../assets/rock-paper-scissors/PaperLeft.png");
+        const scissorsImagePath = require("../../assets/rock-paper-scissors/ScissorsLeft.png");
+        const unkImagePath = require("../../assets/rock-paper-scissors/Scissors-paper-rock.jpg");
+
+        let path;
+        if (choice == stuff.Rock)
+            path = rockImagePath;
+        else if (choice == stuff.Paper)
+            path = paperImagePath;
+        else if (choice == stuff.Scissors)
+            path = scissorsImagePath;
+        else
+            path = unkImagePath;
+        return (
+            <ImageDetail source={path}
+                title={title}
+                style={style}
+            ></ImageDetail>
+        );
+
+    }
+
     return (
         <View>
-            <ImageDetail source={require("../../assets/landscape/field.jpg")}
-                title={" You"}
-                style={style.playerStyle}
-            >
-            </ImageDetail>
+            <View>
+                {displayDecision(style.imageLeftStyle, "You", playerChoice)}
+
+                {displayDecision(style.imageRightStyle, "Computer", computerChoice)}
+            </View>
 
             <Button title={"Play"}
                 onPress={playButtonPressed}
             />
 
-           {displayResult}
+            <View>
+                {displayResult()}
+            </View>
 
         </View>
     );
-
-
-
 }
 
 const style = StyleSheet.create({
     playerStyle: {
-        width: 300,
-        height: 300
+        width: 100,
+        height: 100
+    },
+
+    imageLeftStyle: {
+        width: 100,
+        height: 100,
+        transform: [{ rotate: "0deg" }]
+    },
+
+    imageRightStyle: {
+        width: 100,
+        height: 100,
+        transform: [{ rotate: "180deg" }]
     }
 });
 

@@ -9,7 +9,8 @@ const HomeScreen = (props) => {
       <Button title="Go to Components Screen" onPress={() => { props.navigation.navigate("Components") }} />
       <Button title="Go to Image Screen" onPress={() => { props.navigation.navigate("Image") }} />
       <Button title="Play rock-paper-scissors game" onPress={() => { props.navigation.navigate("RPS") }} />
-
+      <Button title="Go to color screen" onPress={() => { props.navigation.navigate("Color") }} />
+      <Button title="Go to square screen" onPress={() => { props.navigation.navigate("SquareScreen") }} />
 
       <TouchableOpacity onPress = {() => {console.log("Something pressed!")}}>
         <Text> Press me for fun </Text>
